@@ -3,44 +3,42 @@ name: zabbix
 services:
   zabbix-server:
     container_name: zabbix-server
-    image: zabbix/zabbix-server-mysql:6.0-alpine-latest
+    image: zabbix/zabbix-server-pgsql:6.0-alpine-latest
     restart: always
     environment:
-      - DB_SERVER_HOST=mysql-server
-      - MYSQL_USER=${DB_USER}
-      - MYSQL_PASSWORD=${DB_PASSWORD}
-      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - DB_SERVER_HOST=pgsql-server
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
     links:
-      - mysql-server
+      - pgsql-server
 
   zabbix-web:
     container_name: zabbix-web
-    image: zabbix/zabbix-web-nginx-mysql:6.0-alpine-latest
+    image: zabbix/zabbix-web-nginx-pgsql:6.0-alpine-latest
     restart: always
     ports:
       - "80:8080"
     environment:
-      - DB_SERVER_HOST=mysql-server
-      - MYSQL_USER=${DB_USER}
-      - MYSQL_PASSWORD=${DB_PASSWORD}
-      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - DB_SERVER_HOST=pgsql-server
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
       - ZBX_SERVER_NAME=zabbix-server
       - PHP_TZ=America/Sao_Paulo
     links:
-      - mysql-server
+      - pgsql-server
 
-  mysql-server:
-    container_name: mysql-server
-    image: mysql:8.0
+  pgsql-server:
+    container_name: pgsql-server
+    image: postgres:13
     restart: always
-    command: --default-authentication-plugin=mysql_native_password
     environment:
-      - MYSQL_DATABASE=${DB_NAME}
-      - MYSQL_USER=${DB_USER}
-      - MYSQL_PASSWORD=${DB_PASSWORD}
-      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
     volumes:
-      - mysql-data:/var/lib/mysql
+      - pgsql-data:/var/lib/postgresql/data
 
 volumes:
-  mysql-data:
+  pgsql-data:
