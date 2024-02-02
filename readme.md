@@ -1,0 +1,2 @@
+login: Admin
+senha: zabbix
