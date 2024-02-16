@@ -1,1 +1,8 @@
 .env
+.DS_Store
+
+# terraform exclude files and directories
+*.tfstate
+*.tfstate.backup
+*.lock.hcl
+.terraform/
