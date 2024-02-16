@@ -58,8 +58,13 @@ bash:
 deploy:
 	docker-compose exec terraform && \
 	terraform init && \
+	terraform fmt && \
 	terraform plan && \
-	terraform apply
+	terraform apply --auto-approve
+
+deploy:
+	docker-compose exec terraform && \
+	terraform destroy --auto-approve
 
 terraform-exec:
 	docker-compose exec terraform terraform $(CM)
