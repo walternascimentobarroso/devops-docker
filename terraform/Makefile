@@ -59,8 +59,9 @@ deploy:
 	docker-compose exec terraform && \
 	terraform fmt && \
 	terraform init && \
-	terraform plan -out="tfplan.out" && \
-	terraform apply "tfplan.out"
+	terraform validate && \
+	terraform plan -out plan.out && \
+	terraform apply plan.out
 
 deploy:
 	docker-compose exec terraform && \

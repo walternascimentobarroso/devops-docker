@@ -1,5 +1,5 @@
 terraform {
-  required_version = "1.7.3"
+  required_version = ">= 1.7.3"
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -14,9 +14,7 @@ terraform {
 
 provider "aws" {
   region = var.aws_region
-}
-
-resource "aws_s3_bucket" "bucket" {
-  bucket = "${var.company}-${random_pet.bucket_prefix.id}-${var.environment}"
-  tags = local.common_tags
+  default_tags {
+    tags = local.common_tags
+  }
 }
