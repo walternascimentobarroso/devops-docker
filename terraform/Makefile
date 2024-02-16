@@ -57,10 +57,10 @@ bash:
 
 deploy:
 	docker-compose exec terraform && \
-	terraform init && \
 	terraform fmt && \
-	terraform plan && \
-	terraform apply --auto-approve
+	terraform init && \
+	terraform plan -out="tfplan.out" && \
+	terraform apply "tfplan.out"
 
 deploy:
 	docker-compose exec terraform && \

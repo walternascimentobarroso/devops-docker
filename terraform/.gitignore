@@ -6,3 +6,4 @@
 *.tfstate.backup
 *.lock.hcl
 .terraform/
+*.out
