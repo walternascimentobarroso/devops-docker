@@ -63,9 +63,13 @@ deploy:
 	terraform plan -out plan.out && \
 	terraform apply plan.out
 
-deploy:
+remove:
 	docker-compose exec terraform && \
 	terraform destroy --auto-approve
+
+output:
+	docker-compose exec terraform && \
+	terraform output
 
 terraform-exec:
 	docker-compose exec terraform terraform $(CM)
@@ -82,6 +86,8 @@ help:
 	@echo "  ${BGREEN}up${YELLOW}                Start the containers"
 	@echo "  ${BGREEN}stop${YELLOW}              Stop the containers"
 	@echo "  ${BGREEN}deploy${YELLOW}            Deploy the terraform config"
+	@echo "  ${BGREEN}remove${YELLOW}            Remove the terraform config"
+	@echo "  ${BGREEN}output${YELLOW}            Show the output for the config"
 	@echo "  ${BGREEN}destroy${YELLOW}           Destroy the containers"
 	@echo "  ${BGREEN}composer${YELLOW}          Run composer install"
 	@echo "  ${BGREEN}composer_require${YELLOW}  Run composer require [CM]"
