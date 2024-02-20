@@ -57,8 +57,8 @@ bash:
 
 deploy:
 	docker-compose exec terraform && \
-	terraform fmt && \
-	terraform init && \
+	terraform fmt -recursive && \
+	terraform init -backend=true -backend-config="backend-prod.hcl" && \
 	terraform validate && \
 	terraform plan -out plan.out && \
 	terraform apply plan.out
