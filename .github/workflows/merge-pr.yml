@@ -1,0 +1,16 @@
+name: Merge PR to Testing
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  merge_pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Merge PR to Testing
+        uses: pascalgn/automerge-action@v0.16.2
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          BASE_BRANCHES: "testing"
